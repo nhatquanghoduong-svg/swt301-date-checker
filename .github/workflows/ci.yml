@@ -1,0 +1,62 @@
+name: CI — Date Checker Backend
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ─────────────────────────────────────────
+  # JOB 1: Chạy toàn bộ test suite
+  # ─────────────────────────────────────────
+  test:
+    name: 🧪 Run Jest Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install dependencies
+        working-directory: server
+        run: npm ci
+
+      - name: Run tests with coverage
+        working-directory: server
+        run: npm test -- --coverage
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: server/coverage/
+
+  # ─────────────────────────────────────────
+  # JOB 2: Summary report (luôn chạy)
+  # ─────────────────────────────────────────
+  report:
+    name: 📊 CI Summary
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: always()
+
+    steps:
+      - name: Write summary
+        run: |
+          echo "## 📊 CI Report — Date Checker" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Result |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| 🧪 Jest Tests (47 cases) | ${{ needs.test.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Test Groups" >> $GITHUB_STEP_SUMMARY
+          echo "- daysInMonth: 20 cases (31-day months, 30-day months, Feb leap year, invalid months)" >> $GITHUB_STEP_SUMMARY
+          echo "- checkDate API: 27 cases (valid dates, invalid dates, format errors, out of range)" >> $GITHUB_STEP_SUMMARY

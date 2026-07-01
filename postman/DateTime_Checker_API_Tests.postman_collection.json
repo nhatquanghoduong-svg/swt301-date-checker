@@ -1,0 +1,1278 @@
+{
+	"info": {
+		"_postman_id": "datetime-checker-api-tests",
+		"name": "DateTime Checker API Tests",
+		"description": "Bộ test cases kiểm tra API /api/check-date cho ứng dụng Date Time Checker.\n\nCác nhóm test:\n1. Valid Dates - Ngày hợp lệ\n2. Invalid Format - Định dạng không hợp lệ\n3. Out of Range - Giá trị ngoài phạm vi\n4. Invalid Dates - Ngày không tồn tại\n5. Leap Year - Năm nhuận\n6. Boundary Values - Giá trị biên",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3001"
+		}
+	],
+	"item": [
+		{
+			"name": "1. Valid Dates",
+			"item": [
+				{
+					"name": "TC01 - Valid date: 15/6/2000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Message contains correct date', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"15\",\n    \"month\": \"6\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC02 - Valid date: 1/1/2000 (first day of year)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Message confirms correct date', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"1\",\n    \"month\": \"1\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC03 - Valid date: 31/12/2000 (last day of year)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Message confirms correct date', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"31\",\n    \"month\": \"12\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC04 - Valid date: 30/4/2023 (30-day month)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Message confirms correct date', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"30\",\n    \"month\": \"4\",\n    \"year\": \"2023\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Invalid Format",
+			"item": [
+				{
+					"name": "TC05 - Day is text: abc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Day incorrect format', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Day is incorrect format');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"abc\",\n    \"month\": \"6\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC06 - Month is text: xyz",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Month incorrect format', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Month is incorrect format');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"15\",\n    \"month\": \"xyz\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC07 - Year is text: abc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Year incorrect format', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Year is incorrect format');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"15\",\n    \"month\": \"6\",\n    \"year\": \"abc\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC08 - Day is decimal: 1.5",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Day incorrect format', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Day is incorrect format');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"1.5\",\n    \"month\": \"6\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC09 - Day is empty string",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Day incorrect format', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Day is incorrect format');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"\",\n    \"month\": \"6\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Out of Range",
+			"item": [
+				{
+					"name": "TC10 - Day = 0 (below min)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Day out of range', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Day is out of range');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"0\",\n    \"month\": \"6\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC11 - Day = 32 (above max)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Day out of range', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Day is out of range');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"32\",\n    \"month\": \"6\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC12 - Month = 0 (below min)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Month out of range', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Month is out of range');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"15\",\n    \"month\": \"0\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC13 - Month = 13 (above max)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Month out of range', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Month is out of range');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"15\",\n    \"month\": \"13\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC14 - Year = 999 (below min)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Year out of range', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Year is out of range');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"15\",\n    \"month\": \"6\",\n    \"year\": \"999\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC15 - Year = 3001 (above max)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Year out of range', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Year is out of range');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"15\",\n    \"month\": \"6\",\n    \"year\": \"3001\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC16 - Day = -1 (negative)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says Day out of range', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('Day is out of range');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"-1\",\n    \"month\": \"6\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Invalid Dates (Logic)",
+			"item": [
+				{
+					"name": "TC17 - Feb 30 (invalid day for Feb)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says NOT correct date', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is NOT correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"30\",\n    \"month\": \"2\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC18 - Apr 31 (invalid day for 30-day month)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says NOT correct date', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is NOT correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"31\",\n    \"month\": \"4\",\n    \"year\": \"2023\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC19 - Jun 31 (invalid day for 30-day month)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says NOT correct date', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is NOT correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"31\",\n    \"month\": \"6\",\n    \"year\": \"2023\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC20 - Feb 29 non-leap year (2023)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('Message says NOT correct date', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is NOT correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"29\",\n    \"month\": \"2\",\n    \"year\": \"2023\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Leap Year Tests",
+			"item": [
+				{
+					"name": "TC21 - Feb 29 leap year div by 4 (2024)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Feb 29, 2024 is valid leap year date', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"29\",\n    \"month\": \"2\",\n    \"year\": \"2024\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC22 - Feb 29 century NOT leap (1900)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=false', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(false);",
+									"});",
+									"",
+									"pm.test('1900 is NOT a leap year (div by 100 but not 400)', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is NOT correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"29\",\n    \"month\": \"2\",\n    \"year\": \"1900\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC23 - Feb 29 div by 400 IS leap (2000)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('2000 IS a leap year (div by 400)', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"29\",\n    \"month\": \"2\",\n    \"year\": \"2000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC24 - Feb 28 non-leap year (2023) - valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Feb 28 is always valid', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"28\",\n    \"month\": \"2\",\n    \"year\": \"2023\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "6. Boundary Values",
+			"item": [
+				{
+					"name": "TC25 - Min valid: 1/1/1000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Minimum boundary date is valid', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"1\",\n    \"month\": \"1\",\n    \"year\": \"1000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC26 - Max valid: 31/12/3000",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Maximum boundary date is valid', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"31\",\n    \"month\": \"12\",\n    \"year\": \"3000\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC27 - Day = 31, Month = 1 (valid 31-day month)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('Jan 31 is valid', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"31\",\n    \"month\": \"1\",\n    \"year\": \"2023\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				},
+				{
+					"name": "TC28 - Feb 29 century div 400 (2400)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test('Response has success=true', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.success).to.eql(true);",
+									"});",
+									"",
+									"pm.test('2400 is a leap year (div by 400)', function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.message).to.include('is correct date time');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"day\": \"29\",\n    \"month\": \"2\",\n    \"year\": \"2400\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/check-date",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "check-date"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
