@@ -8,7 +8,7 @@ on:
 
 jobs:
   # ─────────────────────────────────────────
-  # JOB 1: Chạy toàn bộ test suite
+  # JOB 1: Chạy toàn bộ test suite (37 test cases)
   # ─────────────────────────────────────────
   test:
     name: 🧪 Run Jest Tests
@@ -55,8 +55,8 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Job | Result |" >> $GITHUB_STEP_SUMMARY
           echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| 🧪 Jest Tests (47 cases) | ${{ needs.test.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| 🧪 Jest Tests (37 cases) | ${{ needs.test.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Test Groups" >> $GITHUB_STEP_SUMMARY
-          echo "- daysInMonth: 20 cases (31-day months, 30-day months, Feb leap year, invalid months)" >> $GITHUB_STEP_SUMMARY
-          echo "- checkDate API: 27 cases (valid dates, invalid dates, format errors, out of range)" >> $GITHUB_STEP_SUMMARY
+          echo "- daysInMonth: 15 cases (31-day months, 30-day months, Feb leap year, invalid months)" >> $GITHUB_STEP_SUMMARY
+          echo "- checkDate API: 22 cases (valid dates, invalid dates, format errors, out of range)" >> $GITHUB_STEP_SUMMARY
