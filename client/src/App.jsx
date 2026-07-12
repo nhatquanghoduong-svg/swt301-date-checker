@@ -46,7 +46,7 @@ function App() {
 
       <div className="window-content">
         <div className="logo-container">
-          <div className="logo-text">FPT UNIVERSITY</div>
+          <img src="./assets/Logo_Trường_Đại_học_FPT.svg.jpg" alt="" className="logo-img" />
           <div className="logo-subtext">DREAM OF INNOVATION</div>
         </div>
 

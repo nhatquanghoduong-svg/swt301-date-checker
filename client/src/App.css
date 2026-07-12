@@ -38,6 +38,12 @@
   text-transform: uppercase;
 }
 
+.logo-img {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+}
+
 .close-btn {
   width: 28px;
   height: 28px;
