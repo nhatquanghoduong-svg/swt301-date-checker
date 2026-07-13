@@ -38,7 +38,7 @@ app.post('/api/check-date', (req, res) => {
 
     // 2. Kiểm tra khoảng giới hạn (Out of range)
     if (d < 1 || d > 31) return res.json({ success: false, message: "Input data for Day is out of range!" });
-    if (m <= 0 || m > 12) return res.json({ success: false, message: "Input data for Month is out of range!" });
+    if (m < 1 || m >= 12) return res.json({ success: false, message: "Input data for Month is out of range!" });
     if (y < 1000 || y > 3000) return res.json({ success: false, message: "Input data for Year is out of range!" });
 
     // 3. Kiểm tra tính hợp lệ của ngày theo Flowchart (Figure 4)
